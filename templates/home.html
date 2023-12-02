@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Raleway:wght@300;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/home_styles.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="left">
+            <div class="company-info">
+                <h1 class="company-name">Taskly</h1>
+                <p class="company-slogan">From To-Do to Done</p>
+            </div>
+
+            <nav class="btns">
+                <a href="{{ url_for('login') }}" class="btn">Login</a>
+
+                <a href="{{ url_for('register') }}" class="btn">Register</a>
+            </nav>
+        </div>
+        {% include 'home-right.html'%}
+    </div>
+
+</body>
+
+</html>

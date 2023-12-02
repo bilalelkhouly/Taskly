@@ -1,0 +1,127 @@
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+<div class="wrapper">
+    {% include 'sidebar.html' %}
+    <div class="dashboard-wrapper">
+        <div class="left-dashboard">
+            <div class="welcome">
+                <h1>Welcome,<span class="user-name">{{ user.first_name }}</span></h1>
+                <h2>Track your tasks and stay organized.</h2>
+            </div>
+
+            <div class="add-task-container">
+                <a href="#" class="add-task">Add Task</a>
+            </div>
+
+            <p class="rounded-section-header">Upcoming Tasks</p>
+
+            <div class="rounded-frame tasks">
+                <ul>
+                    <li class="upcoming-task-list-item">
+                        <div class="task-container">
+                            <img src="../static/assets/arrow.svg" alt="arrow icon">
+
+                            <p class="task-text">Finish portfolio projects</p>
+
+                            <div class="list-icon">
+                                <p>Work</p>
+                            </div>
+                        </div>
+                        <p class="due-date">Due today</p>
+                    </li>
+
+                    <li class="upcoming-task-list-item">
+                        <div class="task-container">
+                            <img src="../static/assets/arrow.svg" alt="arrow icon">
+
+                            <p class="task-text">Go grocery shopping</p>
+
+                            <div class="list-icon">
+                                <p>Life</p>
+                            </div>
+                        </div>
+                        <p class="due-date">Due today</p>
+                    </li>
+
+                    <li class="upcoming-task-list-item">
+                        <div class="task-container">
+                            <img src="../static/assets/arrow.svg" alt="arrow icon">
+
+                            <p class="task-text">Run 4 miles</p>
+
+                            <div class="list-icon">
+                                <p>Sports</p>
+                            </div>
+                        </div>
+                        <p class="due-date">Due tomorrow</p>
+                    </li>
+                </ul>
+                <a href="#" class="view-anchor tasks">View All Posts</a>
+            </div>
+        </div>
+        <div class="right-dashboard">
+             <div class="right-task-overview">
+                <p class="rounded-section-header">Tasks Overview</p>
+                <div class="rounded-frame right">
+                    <ul>
+                        <li class="overview-list-item">
+                            <div class="task-overview-container">
+                                <p class="task-text">Total number of tasks:</p>
+                                <p class="overview-number">3</p>
+                            </div>
+                        </li>
+
+                        <li class="overview-list-item">
+                            <div class="task-overview-container">
+                                <p class="task-text">Due tasks:</p>
+                                <p class="overview-number">2</p>
+                            </div>
+                        </li>
+
+                        <li class="overview-list-item">
+                            <div class="task-overview-container">
+                                <p class="task-text overdue">Overdue tasks:</p>
+                                <p class="overview-number overdue">1</p>
+                            </div>
+                        </li>
+
+                        <li class="overview-list-item">
+                            <div class="task-overview-container">
+                                <p class="task-text completed">Completed tasks:</p>
+                                <p class="overview-number completed">0</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="right-lists">
+                <p class="rounded-section-header">Lists</p>
+                <div class="rounded-frame right">
+                    <ul>
+                        {% for list in lists %}
+                            <li class="lists-item">
+                                <img src="../static/assets/arrow.svg" alt="arrow icon">
+                                <div class="list-icon lists">
+                                    <p>{{ list.list_title }}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                        <li class="lists-item anchor">
+                            <a href="#" class="view-anchor lists">View All Lists</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+{% from "bootstrap5/form.html" import render_form %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;700&family=Raleway:wght@300;900&display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/home_styles.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div class="left">
+        <div class="left-wrapper">
+            <a href="{{ url_for('home') }}">
+                <img src="../static/assets/back-arrow.svg" alt="back arrow" class="back-arrow">
+            </a>
+            <div class="company-info login">
+                <h1 class="company-name">Taskly</h1>
+                <p class="company-slogan">From To-Do to Done</p>
+            </div>
+            <form action="{{ url_for('register') }}" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="name-fields">
+                    <div class="form-group">
+                    {{ form.first_name.label }}
+                    {{ form.first_name(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name.label }}
+                    {{ form.last_name(class="form-control") }}
+                </div>
+                </div>
+                {{ form.email.label }} {{ form.email(class="form-control") }}
+                {{ form.password.label }} {{ form.password(class="form-control") }}
+                {{ form.submit(class="btn btn-primary btn-md") }}
+            </form>
+            <a href="{{ url_for('login') }}" class="register-link">Already have an account? Login</a>
+        </div>
+    </div>
+    {% include 'home-right.html' %}
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+{% from "bootstrap5/form.html" import render_form %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;700&family=Raleway:wght@300;900&display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/home_styles.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="left">
+        <div class="left-wrapper">
+            <a href="{{ url_for('home') }}">
+                <img src="../static/assets/back-arrow.svg" alt="back arrow" class="back-arrow">
+            </a>
+            <div class="company-info login">
+                <h1 class="company-name">Taskly</h1>
+                <p class="company-slogan">From To-Do to Done</p>
+            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            {{ render_form(form) }}
+            <a href="{{ url_for('register') }}" class="register-link">Don't have an account? Register</a>
+        </div>
+    </div>
+
+
+    {% include 'home-right.html' %}
+</div>
+
+</body>
+
+
+</html>

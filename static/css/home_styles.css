@@ -1,0 +1,224 @@
+:root {
+    --dark-color: #05161A;
+    --green-blue-color: #0F969C;
+    --grey-color: #294D61;
+    --light-grey-color: #6DA5C0;
+    --dark-blue-color: #506D7E;
+}
+
+*, 
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+.left, .right {
+    width: 50%;
+    height: 100%;
+}
+
+.left {
+    background: var(--green-blue-color);
+}
+
+.right {
+    position: relative;
+}
+
+/* Background Image */
+.right img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+/* Buttons */
+
+.btns {
+    display: grid;
+    gap: 60px;
+    place-content: center;
+    margin-top: 150px;
+}
+
+.btn {
+    display: block; 
+    width: 100%; 
+    margin: 0 auto;
+    padding: 16px 150px; 
+    border-radius: 24px;
+    background: #fff;
+    color: var(--dark-color);
+    text-align: center;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease; 
+}
+
+.btn:hover {
+    background-color: var(--light-grey-color);
+    color: #fff;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) { 
+    .btn {
+        padding: 16px 20px; 
+        font-size: 16px; 
+    }
+}
+
+@media (max-width: 768px) { 
+    .btn {
+        padding: 14px 18px; 
+        font-size: 14px; 
+    }
+}
+
+@media (max-width: 480px) { 
+    .btn {
+        padding: 12px 16px; 
+        font-size: 13px; 
+    }
+}
+
+/* Company Header */
+.company-info {
+    margin: 100px;
+    color: #FFF;
+    font-family: 'Raleway', sans-serif;
+}
+
+.company-name {
+    font-size: 60px;
+    font-weight: 900;
+    margin: 0;
+}
+
+.company-slogan {
+    font-size: 16px;
+    font-weight: 300;
+    margin: 0;
+}
+
+
+/* Right Side Text */
+.right-content {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-52%);
+    color: #fff;
+    text-align: center;
+}
+
+.right-content h2 {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.right-content p {
+    font-size: 16px;
+    font-weight: 300;
+    margin: 0;
+}
+
+/* Login */
+
+.left-wrapper{
+    max-width: 600px;
+    margin: 65px 100px;
+}
+
+.company-info.login {
+    margin: 0 0 40px;
+}
+
+.form-label, .left-wrapper label {
+    color: #FFF;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+.form-control {
+    color: var(--dark-blue-color);
+    text-align: left;
+    font-size: 16px;
+    font-weight: 200;
+    font-family: 'Poppins', sans-serif;
+    padding: 14px 10px;
+    width: 100%;
+    border-radius: 10px;
+    border: 0px;
+    margin-bottom: 40px;
+}
+
+.btn.btn-primary.btn-md {
+    width: 50%;
+    color: var(--dark-color);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    padding: 16px 32px;
+}
+
+.btn.btn-primary.btn-md:hover {
+    cursor: pointer;
+}
+
+.register-link {
+    transform: translateX(-50%);
+    color: #FFF;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    position: absolute;
+    left: 25%;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    color: var(--light-grey-color);
+}
+
+.back-arrow {
+    width: 30px;
+    height: 30px;
+
+}
+
+/* Register */
+.name-fields {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: 30px;
+}
+
+.flashes {
+    color: var(--grey-color);
+    list-style-type: none;
+    padding: 0;
+}

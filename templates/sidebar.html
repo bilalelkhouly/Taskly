@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;700&family=Raleway:wght@100;300;500;700;900&display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/main_styles.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <nav class="nav-sidebar">
+        <img class="sidebar-icon" src="../static/assets/profile.svg" alt="user icon">
+        <ul>
+            <li>
+                <div class="sidebar-item">
+                    <div>
+                        <img src="../static/assets/home.svg" alt="home icon" class="sidebar-icon">
+                    </div>
+                    <div>
+                        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <li>
+                <div class="sidebar-item">
+                    <div>
+                        <img src="../static/assets/all-tasks.svg" alt="box icon" class="sidebar-icon">
+                    </div>
+                    <div>
+                        <a href="{{ url_for('dashboard') }}">Your tasks</a>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="sidebar-item">
+                    <div>
+
+                        <img src="../static/assets/today.svg" alt="clipboard icon" class="sidebar-icon">
+                    </div>
+                    <div>
+                        <a href="{{ url_for('dashboard') }}">Your Lists</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <a href="{{ url_for('logout') }}">
+            <div class="logout">
+            <img src="../static/assets/logout.svg" alt="logout icon" class="sidebar-icon logout">
+            <p>Logout</p>
+            </div>
+        </a>
+    </nav>
+</div>
+
+</body>
+</html>
