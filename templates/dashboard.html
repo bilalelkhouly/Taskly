@@ -13,7 +13,7 @@
             </div>
 
             <div class="add-task-container">
-                <a href="#" class="add-task">Add Task</a>
+                <a href="#" onclick="openForm()" class="add-task">Add Task</a>
             </div>
 
             <p class="rounded-section-header">Upcoming Tasks</p>
@@ -31,7 +31,8 @@
                                     <p>{{ task.list.list_title }}</p>
                                 </div>
                             </div>
-                            <p class="due-date">Due {% if task.due_date.date() == today %}today{% else %}tomorrow{% endif %}</p>
+                            <p class="due-date">Due {% if task.due_date == today %}today{% else %}
+                                tomorrow{% endif %}</p>
                         </li>
                     {% endfor %}
                 </ul>
@@ -39,7 +40,7 @@
             </div>
         </div>
         <div class="right-dashboard">
-             <div class="right-task-overview">
+            <div class="right-task-overview">
                 <p class="rounded-section-header">Tasks Overview</p>
                 <div class="rounded-frame right">
                     <ul>
@@ -78,7 +79,7 @@
                 <p class="rounded-section-header">Lists</p>
                 <div class="rounded-frame right">
                     <ul>
-                        {% for list in lists %}
+                        {% for list in lists[:3] %}
                             <li class="lists-item">
                                 <img src="../static/assets/arrow.svg" alt="arrow icon">
                                 <div class="list-icon lists">
@@ -94,10 +95,37 @@
                 </div>
             </div>
         </div>
+
+        <div class="form-popup" id="myForm">
+            <form action="{{ url_for('add_task') }}" class="form-container" method="post">
+                <h1>Add Task</h1>
+                <button type="button" class="btn btn-secondary" onclick="closeForm()">Close</button>
+                {{ form.hidden_tag() }}
+
+                <!-- Task Text Field -->
+                <div class="form-group">
+                    {{ form.task_text.label() }}
+                    {{ form.task_text(class="form-control") }}
+                </div>
+
+                <!-- Due Date Field -->
+                <div class="form-group">
+                    {{ form.due_date.label() }}
+                    {{ form.due_date(class="form-control") }}
+                </div>
+
+                <!-- Task List Field -->
+                <div class="form-group">
+                    {{ form.task_list.label() }}
+                    {{ form.task_list(class="form-control") }}
+                </div>
+
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+        </div>
     </div>
 </div>
-</div>
-
+    <script src="../static/js/scripts.js"></script>
 </body>
 
 </html>

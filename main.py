@@ -2,8 +2,9 @@ import os
 from datetime import datetime, timedelta
 from flask import Flask, render_template, redirect, flash, url_for
 from flask_bootstrap import Bootstrap5
+from sqlalchemy import exists, and_, func
 from sqlalchemy.orm import relationship
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, TaskForm
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -54,7 +55,7 @@ class Tasks(db.Model):
     __tablename__ = 'tasks'
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(250), nullable=False)
-    due_date = db.Column(db.DateTime, nullable=False)
+    due_date = db.Column(db.Date, nullable=False)
     completed = db.Column(db.Boolean, default=False, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), nullable=False)
     list = relationship('Lists', back_populates='tasks')
@@ -67,9 +68,10 @@ today = datetime.now().date()
 tomorrow = today + timedelta(days=1)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def dashboard():
     if current_user.is_authenticated:
+        form = TaskForm()
         total_tasks = 0
         overdue_tasks = 0
         completed_tasks = 0
@@ -79,13 +81,14 @@ def dashboard():
                 total_tasks += 1
                 if task.completed:
                     completed_tasks += 1
-                if task.due_date.date() < today:
+                if task.due_date < today:
                     overdue_tasks += 1
-                if task.due_date.date() in [today, tomorrow]:
+                if task.due_date in [today, tomorrow]:
                     upcoming_tasks.append(task)
         return render_template('dashboard.html', user=current_user, lists=current_user.lists,
                                upcoming_tasks=upcoming_tasks[:5], total_tasks=total_tasks, overdue_tasks=overdue_tasks,
-                               completed_tasks=completed_tasks, due_tasks=total_tasks-overdue_tasks, today=today)
+                               completed_tasks=completed_tasks, due_tasks=total_tasks - overdue_tasks, today=today,
+                               form=form)
     else:
         return redirect(url_for('home'))
 
@@ -141,6 +144,42 @@ def register():
         login_user(new_user)
         return redirect(url_for('dashboard'))
     return render_template('register.html', form=form)
+
+
+@app.route('/add', methods=["GET", "POST"])
+def add_task():
+    form = TaskForm()
+    if form.validate_on_submit():
+        list_name = form.task_list.data
+        list_exists = db.session.query(
+            exists().where(
+                and_(
+                    Lists.user_id == current_user.id,
+                    Lists.list_title == list_name
+                )
+            )
+        ).scalar()
+        if list_exists:
+            existing_list = Lists.query.filter_by(user_id=current_user.id, list_title=list_name).first()
+            new_task = Tasks(
+                text=form.task_text.data,
+                due_date=form.due_date.data,
+                list_id=existing_list.id
+            )
+        else:
+            # Create a new list and link it to the task
+            new_list = Lists(list_title=list_name, user_id=current_user.id)
+            db.session.add(new_list)
+            db.session.commit()
+            new_task = Tasks(
+                text=form.task_text.data,
+                due_date=form.due_date.data,
+                list_id=new_list.id
+            )
+        db.session.add(new_task)
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+    return render_template('tasks.html')
 
 
 @app.route('/logout')
