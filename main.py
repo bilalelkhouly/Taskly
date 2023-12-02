@@ -63,19 +63,29 @@ class Tasks(db.Model):
 with app.app_context():
     db.create_all()
 
+today = datetime.now().date()
+tomorrow = today + timedelta(days=1)
+
 
 @app.route('/')
 def dashboard():
     if current_user.is_authenticated:
-        today = datetime.now().date()
-        tomorrow = today + timedelta(days=1)
+        total_tasks = 0
+        overdue_tasks = 0
+        completed_tasks = 0
         upcoming_tasks = []
         for user_list in current_user.lists:
             for task in user_list.tasks:
+                total_tasks += 1
+                if task.completed:
+                    completed_tasks += 1
+                if task.due_date.date() < today:
+                    overdue_tasks += 1
                 if task.due_date.date() in [today, tomorrow]:
                     upcoming_tasks.append(task)
-        print(upcoming_tasks)
-        return render_template('dashboard.html', user=current_user, lists=current_user.lists, upcoming_tasks=upcoming_tasks)
+        return render_template('dashboard.html', user=current_user, lists=current_user.lists,
+                               upcoming_tasks=upcoming_tasks[:5], total_tasks=total_tasks, overdue_tasks=overdue_tasks,
+                               completed_tasks=completed_tasks, due_tasks=total_tasks-overdue_tasks, today=today)
     else:
         return redirect(url_for('home'))
 

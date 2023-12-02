@@ -20,44 +20,20 @@
 
             <div class="rounded-frame tasks">
                 <ul>
-                    <li class="upcoming-task-list-item">
-                        <div class="task-container">
-                            <img src="../static/assets/arrow.svg" alt="arrow icon">
+                    {% for task in upcoming_tasks %}
+                        <li class="upcoming-task-list-item">
+                            <div class="task-container">
+                                <img src="../static/assets/arrow.svg" alt="arrow icon">
 
-                            <p class="task-text">Finish portfolio projects</p>
+                                <p class="task-text">{{ task.text }}</p>
 
-                            <div class="list-icon">
-                                <p>Work</p>
+                                <div class="list-icon">
+                                    <p>{{ task.list.list_title }}</p>
+                                </div>
                             </div>
-                        </div>
-                        <p class="due-date">Due today</p>
-                    </li>
-
-                    <li class="upcoming-task-list-item">
-                        <div class="task-container">
-                            <img src="../static/assets/arrow.svg" alt="arrow icon">
-
-                            <p class="task-text">Go grocery shopping</p>
-
-                            <div class="list-icon">
-                                <p>Life</p>
-                            </div>
-                        </div>
-                        <p class="due-date">Due today</p>
-                    </li>
-
-                    <li class="upcoming-task-list-item">
-                        <div class="task-container">
-                            <img src="../static/assets/arrow.svg" alt="arrow icon">
-
-                            <p class="task-text">Run 4 miles</p>
-
-                            <div class="list-icon">
-                                <p>Sports</p>
-                            </div>
-                        </div>
-                        <p class="due-date">Due tomorrow</p>
-                    </li>
+                            <p class="due-date">Due {% if task.due_date.date() == today %}today{% else %}tomorrow{% endif %}</p>
+                        </li>
+                    {% endfor %}
                 </ul>
                 <a href="#" class="view-anchor tasks">View All Posts</a>
             </div>
@@ -70,28 +46,28 @@
                         <li class="overview-list-item">
                             <div class="task-overview-container">
                                 <p class="task-text">Total number of tasks:</p>
-                                <p class="overview-number">3</p>
+                                <p class="overview-number">{{ total_tasks }}</p>
                             </div>
                         </li>
 
                         <li class="overview-list-item">
                             <div class="task-overview-container">
                                 <p class="task-text">Due tasks:</p>
-                                <p class="overview-number">2</p>
+                                <p class="overview-number">{{ due_tasks }}</p>
                             </div>
                         </li>
 
                         <li class="overview-list-item">
                             <div class="task-overview-container">
                                 <p class="task-text overdue">Overdue tasks:</p>
-                                <p class="overview-number overdue">1</p>
+                                <p class="overview-number overdue">{{ overdue_tasks }}</p>
                             </div>
                         </li>
 
                         <li class="overview-list-item">
                             <div class="task-overview-container">
                                 <p class="task-text completed">Completed tasks:</p>
-                                <p class="overview-number completed">0</p>
+                                <p class="overview-number completed">{{ completed_tasks }}</p>
                             </div>
                         </li>
                     </ul>
