@@ -39,6 +39,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(250), unique=True)
     password = db.Column(db.String(100))
     lists = relationship("Lists", back_populates="user")
+    tasks = relationship('Tasks', back_populates='user')
 
 
 class Lists(db.Model):
@@ -58,7 +59,9 @@ class Tasks(db.Model):
     due_date = db.Column(db.Date, nullable=False)
     completed = db.Column(db.Boolean, default=False, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('lists.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user_data.id'), nullable=False)
     list = relationship('Lists', back_populates='tasks')
+    user = relationship('User', back_populates='tasks')
 
 
 with app.app_context():
@@ -76,15 +79,14 @@ def dashboard():
         overdue_tasks = 0
         completed_tasks = 0
         upcoming_tasks = []
-        for user_list in current_user.lists:
-            for task in user_list.tasks:
-                total_tasks += 1
-                if task.completed:
-                    completed_tasks += 1
-                if task.due_date < today:
-                    overdue_tasks += 1
-                if task.due_date in [today, tomorrow]:
-                    upcoming_tasks.append(task)
+        for user_task in current_user.tasks:
+            total_tasks += 1
+            if user_task.completed:
+                completed_tasks += 1
+            if user_task.due_date < today:
+                overdue_tasks += 1
+            if user_task.due_date in [today, tomorrow]:
+                upcoming_tasks.append(user_task)
         return render_template('dashboard.html', user=current_user, lists=current_user.lists,
                                upcoming_tasks=upcoming_tasks[:6], total_tasks=total_tasks, overdue_tasks=overdue_tasks,
                                completed_tasks=completed_tasks, due_tasks=total_tasks - overdue_tasks, today=today,
@@ -164,7 +166,8 @@ def add_task():
             new_task = Tasks(
                 text=form.task_text.data,
                 due_date=form.due_date.data,
-                list_id=existing_list.id
+                list_id=existing_list.id,
+                user_id=current_user.id
             )
         else:
             # Create a new list and link it to the task
@@ -174,7 +177,8 @@ def add_task():
             new_task = Tasks(
                 text=form.task_text.data,
                 due_date=form.due_date.data,
-                list_id=new_list.id
+                list_id=new_list.id,
+                user_id=current_user.id
             )
         db.session.add(new_task)
         db.session.commit()
