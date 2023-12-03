@@ -182,8 +182,15 @@ def add_task():
             )
         db.session.add(new_task)
         db.session.commit()
-        return redirect(url_for('dashboard'))
-    return render_template('tasks.html')
+        return redirect(url_for('all_tasks'))
+    return redirect(url_for('all_tasks'))
+
+
+@app.route("/tasks")
+def all_tasks():
+    form = TaskForm()
+    sorted_tasks = sorted(current_user.tasks, key=lambda task: task.due_date)
+    return render_template('tasks.html', form=form, tasks=sorted_tasks, today=today, tomorrow=tomorrow)
 
 
 @app.route('/logout')

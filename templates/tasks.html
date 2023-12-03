@@ -1,0 +1,81 @@
+<head>
+    <title>Tasks</title>
+</head>
+<body>
+<div class="wrapper">
+    {% include 'sidebar.html' %}
+    <div class="dashboard-wrapper tasks">
+        <div class="page-header all-tasks">
+            <h1>All Tasks</h1>
+            <h2>Tick off tasks and clear your mind.</h2>
+        </div>
+
+        <div class="tasks-wrapper">
+            <div class="rounded-frame all-tasks">
+                <ul>
+                    {% for task in tasks %}
+                        <li class="all-tasks-list-item">
+                            <div class="task-item-container">
+                                <svg class="clickable-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                     viewBox="0 0 20 20"
+                                     fill="none">
+                                    <path d="M7 10L9 12L13 8M19 10C19 11.1819 18.7672 12.3522 18.3149 13.4442C17.8626 14.5361 17.1997 15.5282 16.364 16.364C15.5282 17.1997 14.5361 17.8626 13.4442 18.3149C12.3522 18.7672 11.1819 19 10 19C8.8181 19 7.64778 18.7672 6.55585 18.3149C5.46392 17.8626 4.47177 17.1997 3.63604 16.364C2.80031 15.5282 2.13738 14.5361 1.68508 13.4442C1.23279 12.3522 1 11.1819 1 10C1 7.61305 1.94821 5.32387 3.63604 3.63604C5.32387 1.94821 7.61305 1 10 1C12.3869 1 14.6761 1.94821 16.364 3.63604C18.0518 5.32387 19 7.61305 19 10Z"
+                                          stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+                                <div class="task-text-container">
+                                    <h3>{{ task.text }}</h3>
+                                    <p>{{ task.list.list_title }}</p>
+                                </div>
+                            </div>
+                            <p class="due-date">
+                                {% if task.due_date < today %}
+                                    Overdue
+                                {% elif task.due_date == today %}
+                                    Due today
+                                {% elif task.due_date == tomorrow %}
+                                    Due tomorrow
+                                {% else %}
+                                    Due {{ task.due_date.strftime('%Y-%m-%d') }}
+                                {% endif %}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="form-popup all-tasks-page" id="myForm">
+                <form action="{{ url_for('add_task') }}" class="form-container all-tasks-page" method="post">
+                    <h1>Add Task</h1>
+                    {{ form.hidden_tag() }}
+
+                    <!-- Task Text Field -->
+                    <div class="form-group all-tasks-page">
+                        {{ form.task_text.label }}
+                        {{ form.task_text(class="form-control") }}
+                    </div>
+
+                    <!-- Due Date Field -->
+                    <div class="form-group all-tasks-page">
+                        {{ form.due_date.label }}
+                        {{ form.due_date(class="form-control") }}
+                    </div>
+
+                    <!-- Task List Field -->
+                    <div class="form-group all-tasks-page">
+                        {{ form.task_list.label }}
+                        {{ form.task_list(class="form-control") }}
+                    </div>
+
+                    <div class="add-task-btn all-tasks-page">
+                        {{ form.submit(class="btn btn-submit all-tasks-page") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../static/js/scripts.js"></script>
+</body>
+</html>

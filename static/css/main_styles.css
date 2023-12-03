@@ -113,23 +113,23 @@ body {
     max-width: 390px;
 }
 
-.welcome {
+.page-header {
     color: #FFF;
     font-family: 'Raleway', sans-serif;
 }
 
-.welcome h1 {
+.page-header h1 {
     font-size: 55px;
     font-weight: 100;
     margin-top: 20px;
     margin-bottom: 0;
 }
 
-.welcome h1 span {
+.page-header h1 span {
     font-weight: 700;
 }
 
-.welcome h2 {
+.page-header h2 {
     margin: 0;
     font-size: 20px;
     font-weight: 500;
@@ -326,7 +326,7 @@ body {
 .form-group {
     display: flex;
     flex-direction: column;
-    margin: 10px 30px 0 30px;
+    margin: 0 30px 10px 30px;
     padding-bottom: 10px;
     gap: 5px;
 }
@@ -378,4 +378,102 @@ body {
 
 .btn.btn-submit {
     background-color: #4FD66D;
+}
+
+/* Tasks Page */
+
+.dashboard-wrapper.tasks {
+    padding: 0px 50px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.page-header.all-tasks h1 {
+    font-weight: 700;
+}
+
+.tasks-wrapper {
+    display: flex;
+    margin: 50px 0;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.rounded-frame.all-tasks {
+    width: 525px;
+    height: 490px;
+    overflow-y: auto;
+}
+
+.all-tasks-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.task-item-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.clickable-icon {
+    cursor: pointer;
+}
+
+.task-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.task-text-container h3 {
+    color: #FFF;
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.task-text-container p {
+    color: #838789;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    margin: 0;
+}
+
+
+.form-popup.all-tasks-page {
+    display: flex;
+    position: static;
+    transform: none;
+    top: auto;
+    left: auto;
+    width: 525px;
+    height: 490px;
+}
+
+.form-container.all-tasks-page {
+    background-color: var(--sidebar-color);
+}
+
+.form-container.all-tasks-page label {
+    font-size: 16px;
+}
+
+.form-group.all-tasks-page {
+    margin: 0 30px 25px 30px;
+}
+
+.add-task-btn.all-tasks-page {
+    justify-content: center;
+}
+
+.btn.btn-submit.all-tasks-page {
+    padding: 12px 32px;
+    font-size: 16px;
 }

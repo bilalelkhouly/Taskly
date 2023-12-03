@@ -7,7 +7,7 @@
     {% include 'sidebar.html' %}
     <div class="dashboard-wrapper">
         <div class="left-dashboard">
-            <div class="welcome">
+            <div class="page-header">
                 <h1>Welcome,<span class="user-name">{{ user.first_name }}</span></h1>
                 <h2>Track your tasks and stay organized.</h2>
             </div>
@@ -36,7 +36,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a href="#" class="view-anchor tasks">View All Posts</a>
+                <a href="{{ url_for('all_tasks') }}" class="view-anchor tasks">View All Tasks</a>
             </div>
         </div>
         <div class="right-dashboard">
@@ -79,7 +79,7 @@
                 <p class="rounded-section-header">Lists</p>
                 <div class="rounded-frame right">
                     <ul>
-                        {% for list in lists[:3] %}
+                        {% for list in lists[:4] %}
                             <li class="lists-item">
                                 <img src="../static/assets/arrow.svg" alt="arrow icon">
                                 <div class="list-icon lists">
@@ -87,10 +87,6 @@
                                 </div>
                             </li>
                         {% endfor %}
-
-                        <li class="lists-item anchor">
-                            <a href="#" class="view-anchor lists">View All Lists</a>
-                        </li>
                     </ul>
                 </div>
             </div>
