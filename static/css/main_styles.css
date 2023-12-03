@@ -5,6 +5,7 @@
     --light-grey-color: #6DA5C0;
     --dark-blue-color: #506D7E;
     --sidebar-color: #072E33;
+
 }
 
 *,
@@ -297,36 +298,84 @@ body {
 .form-popup {
     display: none;
     position: fixed;
-    right: 15px;
-    z-index: 9;
-    transform: translateX(-600px) translateY(75px);
+    z-index: 1000;
+    transform: translateX(-180px) translateY(-250px);
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 424px;
 }
 
 .form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: white;
+    background-color: var(--green-blue-color);
+    margin:0;
+    border-radius: 50px;
+    width: 100%;
+}
+
+.form-container h1 {
+    color: #FFF;
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    margin: 22px 0 15px;
+    justify-content: center;
+    display: flex;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 30px 0 30px;
+    padding-bottom: 10px;
+    gap: 5px;
+}
+
+.form-container label {
+    color: #FFF;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    width: fit-content;
 }
 
 .form-control {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
-}
-
-.form-control:focus {
+    color: var(--dark-blue-color);
+    font-size: 12px;
+    font-weight: 275;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
     outline: none;
+    font-family: 'Poppins', sans-serif;
 }
 
-.form-container .btn {
-  background-color: #F00;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom:10px;
-  opacity: 0.8;
+.add-task-btn {
+    margin: 20px 55px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    width: 100px;
+    border-radius: 24px;
+    border: none;
+    color: #FFF;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 32px;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn.btn-close {
+    background-color: #B84242;
+}
+
+.btn.btn-submit {
+    background-color: #4FD66D;
 }

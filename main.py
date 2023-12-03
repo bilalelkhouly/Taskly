@@ -86,7 +86,7 @@ def dashboard():
                 if task.due_date in [today, tomorrow]:
                     upcoming_tasks.append(task)
         return render_template('dashboard.html', user=current_user, lists=current_user.lists,
-                               upcoming_tasks=upcoming_tasks[:5], total_tasks=total_tasks, overdue_tasks=overdue_tasks,
+                               upcoming_tasks=upcoming_tasks[:6], total_tasks=total_tasks, overdue_tasks=overdue_tasks,
                                completed_tasks=completed_tasks, due_tasks=total_tasks - overdue_tasks, today=today,
                                form=form)
     else:

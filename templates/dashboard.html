@@ -3,7 +3,7 @@
 </head>
 
 <body>
-<div class="wrapper">
+<div class="wrapper" id="myWrapper">
     {% include 'sidebar.html' %}
     <div class="dashboard-wrapper">
         <div class="left-dashboard">
@@ -95,37 +95,38 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-popup" id="myForm">
-            <form action="{{ url_for('add_task') }}" class="form-container" method="post">
-                <h1>Add Task</h1>
-                <button type="button" class="btn btn-secondary" onclick="closeForm()">Close</button>
-                {{ form.hidden_tag() }}
-
-                <!-- Task Text Field -->
-                <div class="form-group">
-                    {{ form.task_text.label() }}
-                    {{ form.task_text(class="form-control") }}
-                </div>
-
-                <!-- Due Date Field -->
-                <div class="form-group">
-                    {{ form.due_date.label() }}
-                    {{ form.due_date(class="form-control") }}
-                </div>
-
-                <!-- Task List Field -->
-                <div class="form-group">
-                    {{ form.task_list.label() }}
-                    {{ form.task_list(class="form-control") }}
-                </div>
-
-                {{ form.submit(class="btn btn-primary") }}
-            </form>
-        </div>
     </div>
 </div>
-    <script src="../static/js/scripts.js"></script>
+<div class="form-popup" id="myForm">
+    <form action="{{ url_for('add_task') }}" class="form-container" method="post">
+        <h1>Add Task</h1>
+        {{ form.hidden_tag() }}
+
+        <!-- Task Text Field -->
+        <div class="form-group">
+            {{ form.task_text.label }}
+            {{ form.task_text(class="form-control") }}
+        </div>
+
+        <!-- Due Date Field -->
+        <div class="form-group">
+            {{ form.due_date.label }}
+            {{ form.due_date(class="form-control") }}
+        </div>
+
+        <!-- Task List Field -->
+        <div class="form-group">
+            {{ form.task_list.label }}
+            {{ form.task_list(class="form-control") }}
+        </div>
+
+        <div class="add-task-btn">
+            <button type="button" class="btn btn-close" onclick="closeForm()">Close</button>
+            {{ form.submit(class="btn btn-submit") }}
+        </div>
+    </form>
+</div>
+<script src="../static/js/scripts.js"></script>
 </body>
 
 </html>
