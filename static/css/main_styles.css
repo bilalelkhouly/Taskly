@@ -21,7 +21,7 @@ body {
 /* Sidebar */
 
 .sidebar {
-    width: 240px;
+    width: 201px;
     background: var(--sidebar-color);
 }
 
@@ -297,10 +297,9 @@ body {
 .form-popup {
     display: none;
     position: fixed;
-    bottom: 0;
     right: 15px;
-    border: 3px solid #f1f1f1;
     z-index: 9;
+    transform: translateX(-600px) translateY(75px);
 }
 
 .form-container {

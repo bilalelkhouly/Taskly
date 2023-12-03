@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 from flask import Flask, render_template, redirect, flash, url_for
 from flask_bootstrap import Bootstrap5
-from sqlalchemy import exists, and_, func
+from sqlalchemy import exists, and_
 from sqlalchemy.orm import relationship
 from forms import LoginForm, RegisterForm, TaskForm
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
