@@ -135,7 +135,13 @@ body {
     font-weight: 500;
 }
 
-.add-task-container {
+.add-task-list-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.btn-add-container {
     white-space: nowrap;
     background: #ffffff;
     border-radius: 50px;
@@ -145,7 +151,7 @@ body {
     margin-top: 50px;
 }
 
-.add-task {
+.btn-add-container a {
     color: #000;
     font-size: 16px;
     font-weight: 700;
@@ -503,4 +509,11 @@ body {
 
 .delete-icon { 
     cursor: pointer;
+}
+
+/* Add Lists */
+
+.form-popup.lists {
+    height: auto;
+    transform: translateX(-180px) translateY(-150px);
 }

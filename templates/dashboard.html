@@ -12,117 +12,139 @@
                     <h2>Track your tasks and stay organized.</h2>
                 </div>
 
-                <div class="add-task-container">
-                    <a href="#" onclick="openForm()" class="add-task">Add Task</a>
+                <div class="add-task-list-container">
+                    <div class="btn-add-container">
+                        <a href="#" onclick="openTaskForm()">Add Task</a>
+                    </div>
+                    <div class="btn-add-container">
+                        <a href="#" onclick="openListForm()"">Create list</a>
+                    </div>
                 </div>
 
-                <p class="rounded-section-header">Upcoming Tasks</p>
 
-                <div class="rounded-frame tasks">
-                    <ul>
-                        {% for task in upcoming_tasks %}
-                        <li class="upcoming-task-list-item">
-                            <div class="task-container">
-                                <img src="../static/assets/arrow.svg" alt="arrow icon">
+                <p class=" rounded-section-header">Upcoming Tasks</p>
 
-                                <p class="task-text">{{ task.text }}</p>
+                            <div class="rounded-frame tasks">
+                                <ul>
+                                    {% for task in upcoming_tasks %}
+                                    <li class="upcoming-task-list-item">
+                                        <div class="task-container">
+                                            <img src="../static/assets/arrow.svg" alt="arrow icon">
 
-                                <div class="list-icon">
-                                    <p>{{ task.list.list_title }}</p>
-                                </div>
+                                            <p class="task-text">{{ task.text }}</p>
+
+                                            <div class="list-icon">
+                                                <p>{{ task.list.list_title }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="due-date">Due {% if task.due_date == today %}today{% else %}
+                                            tomorrow{% endif %}</p>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <a href="{{ url_for('all_tasks') }}" class="view-anchor tasks">View All Tasks</a>
                             </div>
-                            <p class="due-date">Due {% if task.due_date == today %}today{% else %}
-                                tomorrow{% endif %}</p>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <a href="{{ url_for('all_tasks') }}" class="view-anchor tasks">View All Tasks</a>
-                </div>
-            </div>
-            <div class="right-dashboard">
-                <div class="right-task-overview">
-                    <p class="rounded-section-header">Tasks Overview</p>
-                    <div class="rounded-frame right">
-                        <ul>
-                            <li class="overview-list-item">
-                                <div class="task-overview-container">
-                                    <p class="task-text">Total number of tasks:</p>
-                                    <p class="overview-number">{{ total_tasks }}</p>
-                                </div>
-                            </li>
-
-                            <li class="overview-list-item">
-                                <div class="task-overview-container">
-                                    <p class="task-text">Due tasks:</p>
-                                    <p class="overview-number">{{ due_tasks }}</p>
-                                </div>
-                            </li>
-
-                            <li class="overview-list-item">
-                                <div class="task-overview-container">
-                                    <p class="task-text overdue">Overdue tasks:</p>
-                                    <p class="overview-number overdue">{{ overdue_tasks }}</p>
-                                </div>
-                            </li>
-
-                            <li class="overview-list-item">
-                                <div class="task-overview-container">
-                                    <p class="task-text completed">Completed tasks:</p>
-                                    <p class="overview-number completed">{{ completed_tasks }}</p>
-                                </div>
-                            </li>
-                        </ul>
                     </div>
-                </div>
+                    <div class="right-dashboard">
+                        <div class="right-task-overview">
+                            <p class="rounded-section-header">Tasks Overview</p>
+                            <div class="rounded-frame right">
+                                <ul>
+                                    <li class="overview-list-item">
+                                        <div class="task-overview-container">
+                                            <p class="task-text">Total number of tasks:</p>
+                                            <p class="overview-number">{{ total_tasks }}</p>
+                                        </div>
+                                    </li>
 
-                <div class="right-lists">
-                    <p class="rounded-section-header">Lists</p>
-                    <div class="rounded-frame right">
-                        <ul>
-                            {% for list in lists[:4] %}
-                            <li class="lists-item">
-                                <img src="../static/assets/arrow.svg" alt="arrow icon">
-                                <div class="list-icon lists">
-                                    <p>{{ list.list_title }}</p>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
+                                    <li class="overview-list-item">
+                                        <div class="task-overview-container">
+                                            <p class="task-text">Due tasks:</p>
+                                            <p class="overview-number">{{ due_tasks }}</p>
+                                        </div>
+                                    </li>
+
+                                    <li class="overview-list-item">
+                                        <div class="task-overview-container">
+                                            <p class="task-text overdue">Overdue tasks:</p>
+                                            <p class="overview-number overdue">{{ overdue_tasks }}</p>
+                                        </div>
+                                    </li>
+
+                                    <li class="overview-list-item">
+                                        <div class="task-overview-container">
+                                            <p class="task-text completed">Completed tasks:</p>
+                                            <p class="overview-number completed">{{ completed_tasks }}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="right-lists">
+                            <p class="rounded-section-header">Lists</p>
+                            <div class="rounded-frame right">
+                                <ul>
+                                    {% for list in lists[:4] %}
+                                    <li class="lists-item">
+                                        <img src="../static/assets/arrow.svg" alt="arrow icon">
+                                        <div class="list-icon lists">
+                                            <p>{{ list.list_title }}</p>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-popup" id="myForm">
-        <form action="{{ url_for('add_task') }}" class="form-container" method="post">
-            <h1>Add Task</h1>
-            {{ form.hidden_tag() }}
+            <div class="form-popup" id="myTaskForm">
+                <form action="{{ url_for('add_task') }}" class="form-container" method="post">
+                    <h1>Add Task</h1>
+                    {{ task_form.hidden_tag() }}
 
-            <!-- Task Text Field -->
-            <div class="form-group">
-                {{ form.task_text.label }}
-                {{ form.task_text(class="form-control") }}
-            </div>
+                    <!-- Task Text Field -->
+                    <div class="form-group">
+                        {{ task_form.task_text.label }}
+                        {{ task_form.task_text(class="form-control") }}
+                    </div>
 
-            <!-- Due Date Field -->
-            <div class="form-group">
-                {{ form.due_date.label }}
-                {{ form.due_date(class="form-control") }}
-            </div>
+                    <!-- Due Date Field -->
+                    <div class="form-group">
+                        {{ task_form.due_date.label }}
+                        {{ task_form.due_date(class="form-control") }}
+                    </div>
 
-            <!-- Task List Field -->
-            <div class="form-group">
-                {{ form.task_list.label }}
-                {{ form.task_list(class="form-control") }}
-            </div>
+                    <!-- Task List Field -->
+                    <div class="form-group">
+                        {{ task_form.task_list.label }}
+                        {{ task_form.task_list(class="form-control") }}
+                    </div>
 
-            <div class="add-task-btn">
-                <button type="button" class="btn btn-close" onclick="closeForm()">Close</button>
-                {{ form.submit(class="btn btn-submit") }}
+                    <div class="add-task-btn">
+                        <button type="button" class="btn btn-close" onclick="closeTaskForm()">Close</button>
+                        {{ task_form.submit(class="btn btn-submit") }}
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-    <script src="../static/js/scripts.js"></script>
+            <div class="form-popup lists" id="myListForm">
+                <form action="{{ url_for('add_list') }}" class="form-container" method="post">
+                    <h1>Create List</h1>
+                    {{ list_form.hidden_tag() }}
+
+                    <div class="form-group">
+                        {{ list_form.list_name.label }}
+                        {{ list_form.list_name(class="form-control") }}
+                    </div>
+
+                    <div class="add-task-btn">
+                        <button type="button" class="btn btn-close" onclick="closeListForm()">Close</button>
+                        {{ list_form.submit(class="btn btn-submit") }}
+                    </div>
+                </form>
+            </div>
+            <script src="../static/js/scripts.js"></script>
 </body>
 
 </html>

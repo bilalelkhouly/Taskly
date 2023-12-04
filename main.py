@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, flash, url_for, jsonify
 from flask_bootstrap import Bootstrap5
 from sqlalchemy import exists, and_
 from sqlalchemy.orm import relationship
-from forms import LoginForm, RegisterForm, TaskForm
+from forms import LoginForm, RegisterForm, TaskForm, ListForm
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -77,8 +77,9 @@ tomorrow = today + timedelta(days=1)
 @app.route('/', methods=['GET', 'POST'])
 def dashboard():
     if current_user.is_authenticated:
-        form = TaskForm()
-        form.task_list.choices = [("", "Select a list")] + [(user_list.id, user_list.list_title) for user_list in current_user.lists]
+        task_form = TaskForm()
+        task_form.task_list.choices = [("", "Select a list")] + [(user_list.id, user_list.list_title) for user_list in current_user.lists]
+        list_form = ListForm()
         total_tasks = 0
         overdue_tasks = 0
         completed_tasks = 0
@@ -94,7 +95,7 @@ def dashboard():
         return render_template('dashboard.html', user=current_user, lists=current_user.lists,
                                upcoming_tasks=upcoming_tasks[:6], total_tasks=total_tasks, overdue_tasks=overdue_tasks,
                                completed_tasks=completed_tasks, due_tasks=total_tasks - overdue_tasks, today=today,
-                               form=form)
+                               task_form=task_form, list_form=list_form)
     else:
         return redirect(url_for('home'))
 
@@ -168,6 +169,19 @@ def add_task():
         db.session.commit()
         return redirect(url_for('all_tasks'))
     return redirect(url_for('all_tasks'))
+
+
+@app.route('/add-list', methods=['GET', 'POST'])
+def add_list():
+    form = ListForm()
+    if form.validate_on_submit():
+        new_list = Lists(
+            list_title=form.list_name.data,
+            user_id=current_user.id
+        )
+        db.session.add(new_list)
+        db.session.commit()
+        return redirect(url_for('dashboard'))
 
 
 @app.route("/tasks")

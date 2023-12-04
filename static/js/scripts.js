@@ -1,10 +1,20 @@
-function openForm() {
-    document.getElementById("myForm").style.display = "flex"
+function openTaskForm() {
+    document.getElementById("myTaskForm").style.display = "flex"
     document.getElementById("myWrapper").style.filter = "blur(4px)"
 }
 
-function closeForm() {
-    document.getElementById("myForm").style.display = "none"
+function closeTaskForm() {
+    document.getElementById("myTaskForm").style.display = "none"
+    document.getElementById("myWrapper").style.filter = "none"
+}
+
+function openListForm() {
+    document.getElementById("myListForm").style.display = "flex"
+    document.getElementById("myWrapper").style.filter = "blur(4px)"
+}
+
+function closeListForm() {
+    document.getElementById("myListForm").style.display = "none"
     document.getElementById("myWrapper").style.filter = "none"
 }
 

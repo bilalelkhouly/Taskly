@@ -22,3 +22,7 @@ class TaskForm(FlaskForm):
     due_date = DateField("Due Date", validators=[DataRequired()], render_kw={"placeholder": "Enter due date"})
     task_list = SelectField("List", validators=[DataRequired()], coerce=str)
     submit = SubmitField("Add")
+
+class ListForm(FlaskForm):
+    list_name = StringField("List name", validators=[DataRequired()], render_kw={"placeholder": "Enter list name"})
+    submit = SubmitField("Add")
