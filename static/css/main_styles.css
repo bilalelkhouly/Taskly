@@ -477,3 +477,20 @@ body {
     padding: 12px 32px;
     font-size: 16px;
 }
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
+
+.fade-out-animation {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+.completed-task {
+    text-decoration: line-through;
+}

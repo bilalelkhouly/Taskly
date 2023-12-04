@@ -1,6 +1,7 @@
 import os
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
-from flask import Flask, render_template, redirect, flash, url_for
+from flask import Flask, render_template, redirect, flash, url_for, jsonify
 from flask_bootstrap import Bootstrap5
 from sqlalchemy import exists, and_
 from sqlalchemy.orm import relationship
@@ -8,6 +9,8 @@ from forms import LoginForm, RegisterForm, TaskForm
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -189,7 +192,7 @@ def add_task():
 @app.route("/tasks")
 def all_tasks():
     form = TaskForm()
-    sorted_tasks = sorted(current_user.tasks, key=lambda task: task.due_date)
+    sorted_tasks = sorted(current_user.tasks, key=lambda task: (task.completed, task.due_date))
     return render_template('tasks.html', form=form, tasks=sorted_tasks, today=today, tomorrow=tomorrow)
 
 
@@ -197,6 +200,14 @@ def all_tasks():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+@app.route('/completed/<int:task_id>', methods=['POST'])
+def completed(task_id):
+    task_to_modify = db.get_or_404(Tasks, task_id)
+    task_to_modify.completed = not task_to_modify.completed
+    db.session.commit()
+    return jsonify(success=True, completed=task_to_modify.completed)
 
 
 if __name__ == "__main__":
