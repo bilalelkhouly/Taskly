@@ -100,6 +100,11 @@ def dashboard():
         return redirect(url_for('home'))
 
 
+@app.route('/get_lists', methods=['GET'])
+def get_lists():
+    list_data = [{'id': current_list.id, 'title': current_list.list_title} for current_list in current_user.lists]
+    return jsonify(list_data)
+
 @app.route('/home')
 def home():
     return render_template('home.html')

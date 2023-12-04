@@ -40,7 +40,7 @@ body {
     padding-left: 0;
     list-style: none;
     margin-top: 60px;
-    margin-bottom: 360px;
+    height: 520px;
 }
 
 .nav-sidebar li {
@@ -66,7 +66,25 @@ body {
 
 .nav-sidebar li a:hover {
     font-size:18px;
-    color: var(--light-grey-color)
+    color: var(--light-grey-color);
+}
+
+
+
+.your-list-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.arrow-icon {
+    font-size: 10px;
+    color: #fff;
+    transition: transform 0.1s ease-in-out;
+}
+
+.rotated {
+    transform: rotate(90deg);
 }
 
 .logout {
@@ -516,4 +534,32 @@ body {
 .form-popup.lists {
     height: auto;
     transform: translateX(-180px) translateY(-150px);
+}
+
+/* Lists Dropdown */
+
+.nav-sidebar ul.dropdown-ul {
+    margin-top: 20px;
+    height: fit-content;
+    margin-left: 30px;
+    list-style: circle;
+    list-style-position: inside;
+    color: #fff;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+li.dropdown-list-item {
+    padding-bottom: 10px;
+    width: fit-content;
+}
+
+li.dropdown-list-item a {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+li.dropdown-list-item a:hover {
+    color: var(--light-grey-color);
+    font-size: 14px;
 }

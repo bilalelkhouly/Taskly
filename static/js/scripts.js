@@ -65,3 +65,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtn = document.getElementById("your-lists-toggle");
+    const dropdown = document.querySelector(".your-lists-dropdown");
+    const arrowIcon = document.querySelector(".arrow-icon");
+
+    toggleBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        
+        console.log("Click event occurred"); 
+
+        // Toggle the display property
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+            arrowIcon.classList.remove("rotated");
+        } else {
+            // Fetch list data using AJAX
+            fetch('/get_lists')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate the dropdown with the fetched data
+                    const listOptions = data.map(list => {
+                        return `<li class="dropdown-list-item"><a href="/list/${list.title}">${list.title}</a></li>`;
+                    });
+                    dropdown.innerHTML = `<ul class="dropdown-ul">${listOptions.join('')}</ul>`;
+                    dropdown.style.display = "block";
+                    arrowIcon.classList.add("rotated");
+                    console.log("Dropdown opened");
+                })
+                .catch(error => console.error(error));
+        }
+    });
+});
