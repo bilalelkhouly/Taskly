@@ -494,3 +494,13 @@ body {
 .completed-task {
     text-decoration: line-through;
 }
+
+.task-delete-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-icon { 
+    cursor: pointer;
+}

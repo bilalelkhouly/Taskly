@@ -209,6 +209,12 @@ def completed(task_id):
     db.session.commit()
     return jsonify(success=True, completed=task_to_modify.completed)
 
+@app.route('/delete/<int:task_id>', methods=['POST'])
+def delete_task(task_id):
+    task_to_delete = db.get_or_404(Tasks, task_id)
+    db.session.delete(task_to_delete)
+    db.session.commit()
+    return jsonify(success=True), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
