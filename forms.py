@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, EmailField, PasswordField, DateField
+from wtforms import StringField, SubmitField, EmailField, PasswordField, DateField, SelectField
 from wtforms.validators import DataRequired, URL
 
 
@@ -20,5 +20,5 @@ class RegisterForm(FlaskForm):
 class TaskForm(FlaskForm):
     task_text = StringField("Task", validators=[DataRequired()], render_kw={"placeholder": "Enter task"})
     due_date = DateField("Due Date", validators=[DataRequired()], render_kw={"placeholder": "Enter due date"})
-    task_list = StringField("List", validators=[DataRequired()], render_kw={"placeholder": "Enter list"})
+    task_list = SelectField("List", validators=[DataRequired()], coerce=str)
     submit = SubmitField("Add")

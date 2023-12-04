@@ -78,6 +78,7 @@ tomorrow = today + timedelta(days=1)
 def dashboard():
     if current_user.is_authenticated:
         form = TaskForm()
+        form.task_list.choices = [("", "Select a list")] + [(user_list.id, user_list.list_title) for user_list in current_user.lists]
         total_tasks = 0
         overdue_tasks = 0
         completed_tasks = 0
@@ -154,33 +155,13 @@ def register():
 @app.route('/add', methods=["GET", "POST"])
 def add_task():
     form = TaskForm()
+    form.task_list.choices = [("", "Select a list")] + [(user_list.id, user_list.list_title) for user_list in current_user.lists]
     if form.validate_on_submit():
-        list_name = form.task_list.data
-        list_exists = db.session.query(
-            exists().where(
-                and_(
-                    Lists.user_id == current_user.id,
-                    Lists.list_title == list_name
-                )
-            )
-        ).scalar()
-        if list_exists:
-            existing_list = Lists.query.filter_by(user_id=current_user.id, list_title=list_name).first()
-            new_task = Tasks(
+        selected_list_id = form.task_list.data
+        new_task = Tasks(
                 text=form.task_text.data,
                 due_date=form.due_date.data,
-                list_id=existing_list.id,
-                user_id=current_user.id
-            )
-        else:
-            # Create a new list and link it to the task
-            new_list = Lists(list_title=list_name, user_id=current_user.id)
-            db.session.add(new_list)
-            db.session.commit()
-            new_task = Tasks(
-                text=form.task_text.data,
-                due_date=form.due_date.data,
-                list_id=new_list.id,
+                list_id=selected_list_id,
                 user_id=current_user.id
             )
         db.session.add(new_task)
@@ -192,6 +173,7 @@ def add_task():
 @app.route("/tasks")
 def all_tasks():
     form = TaskForm()
+    form.task_list.choices = [("", "Select a list")] + [(user_list.id, user_list.list_title) for user_list in current_user.lists]
     sorted_tasks = sorted(current_user.tasks, key=lambda task: (task.completed, task.due_date))
     return render_template('tasks.html', form=form, tasks=sorted_tasks, today=today, tomorrow=tomorrow)
 
