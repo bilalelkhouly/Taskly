@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
-from flask import Flask, render_template, redirect, flash, url_for, jsonify
+from flask import Flask, render_template, redirect, flash, url_for, jsonify, request
 from flask_bootstrap import Bootstrap5
 from sqlalchemy import exists, and_
 from sqlalchemy.orm import relationship
-from forms import LoginForm, RegisterForm, TaskForm, ListForm
+from forms import LoginForm, RegisterForm, TaskForm, ListForm, TaskListForm
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -70,8 +70,7 @@ class Tasks(db.Model):
 with app.app_context():
     db.create_all()
 
-today = datetime.now().date()
-tomorrow = today + timedelta(days=1)
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -83,6 +82,8 @@ def dashboard():
         total_tasks = 0
         overdue_tasks = 0
         completed_tasks = 0
+        today = datetime.now().date()
+        tomorrow = today + timedelta(days=1)
         upcoming_tasks = []
         for user_task in current_user.tasks:
             total_tasks += 1
@@ -192,6 +193,8 @@ def add_list():
 @app.route("/tasks")
 def all_tasks():
     form = TaskForm()
+    today = datetime.now().date()
+    tomorrow = today + timedelta(days=1)
     form.task_list.choices = [("", "Select a list")] + [(user_list.id, user_list.list_title) for user_list in current_user.lists]
     sorted_tasks = sorted(current_user.tasks, key=lambda task: (task.completed, task.due_date))
     return render_template('tasks.html', form=form, tasks=sorted_tasks, today=today, tomorrow=tomorrow)
@@ -216,6 +219,32 @@ def delete_task(task_id):
     db.session.delete(task_to_delete)
     db.session.commit()
     return jsonify(success=True), 200
+
+@app.route('/list/<list_name>', methods=['GET', 'POST'])
+def single_list(list_name):
+    form = TaskListForm()
+    list_to_show = db.session.execute(db.select(Lists).where(Lists.list_title == list_name)).scalar()
+    today = datetime.now().date()
+    tomorrow = today + timedelta(days=1)
+    sorted_tasks = sorted(list_to_show.tasks, key=lambda task: (task.completed, task.due_date))
+    if form.validate_on_submit():
+        new_task = Tasks(
+                text=form.task_text.data,
+                due_date=form.due_date.data,
+                list_id=list_to_show.id,
+                user_id=current_user.id
+            )
+        db.session.add(new_task)
+        db.session.commit()
+        return redirect(url_for('single_list', list_name=list_to_show.list_title))
+    return render_template('list.html', list=list_to_show, today=today, tomorrow=tomorrow, form=form, tasks=sorted_tasks)
+
+@app.route('/delete/<int:list_id>')
+def delete_list(list_id):
+    list_to_delete = db.get_or_404(Lists, list_id)
+    db.session.delete(list_to_delete)
+    db.session.commit()
+    return redirect(url_for('dashboard'))
 
 if __name__ == "__main__":
     app.run(debug=True)

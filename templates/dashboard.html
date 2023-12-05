@@ -89,7 +89,8 @@
                                     <li class="lists-item">
                                         <img src="../static/assets/arrow.svg" alt="arrow icon">
                                         <div class="list-icon lists">
-                                            <p>{{ list.list_title }}</p>
+                                            <a href="{{ url_for('single_list', list_name = list.list_title) }}">{{
+                                                list.list_title }}</a>
                                         </div>
                                     </li>
                                     {% endfor %}

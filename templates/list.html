@@ -1,5 +1,5 @@
 <head>
-    <title>Tasks</title>
+    <title>List</title>
 </head>
 
 <body>
@@ -7,15 +7,14 @@
         {% include 'sidebar.html' %}
         <div class="dashboard-wrapper pages">
             <div class="page-header pages">
-                <h1>All Tasks</h1>
-                <h2>Tick off tasks and clear your mind.</h2>
+                <h1>{{ list.list_title }}</h1>
             </div>
 
             <div class="tasks-wrapper">
                 <div class="rounded-frame all-tasks">
                     <ul>
                         {% for task in tasks %}
-                        <li class="all-tasks-list-item {{ 'completed-task' if task.completed }}">
+                        <li class="all-tasks-list-item without-list {{ 'completed-task' if task.completed }}">
                             <div class="task-item-container">
                                 <svg class="clickable-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     viewBox="0 0 20 20" fill="none" data-task-id="{{ task.id }}">
@@ -35,7 +34,6 @@
                                                 fill="white" />
                                         </svg>
                                     </div>
-                                    <p>{{ task.list.list_title }}</p>
                                 </div>
                             </div>
                             <p class="due-date">
@@ -47,37 +45,36 @@
                     </ul>
                 </div>
 
-                <div class="form-popup all-tasks-page" id="myForm">
-                    <form action="{{ url_for('add_task') }}" class="form-container all-tasks-page" method="post">
-                        <h1>Add Task</h1>
-                        {{ form.hidden_tag() }}
+                <div class="list-page-wrapper">
+                    <div class="form-popup all-tasks-page list" id="myForm">
+                        <form action="{{ url_for('single_list', list_name=list.list_title) }}"
+                            class="form-container all-tasks-page" method="post">
+                            <h1>Add Task</h1>
+                            {{ form.hidden_tag() }}
 
-                        <!-- Task Text Field -->
-                        <div class="form-group all-tasks-page">
-                            {{ form.task_text.label }}
-                            {{ form.task_text(class="form-control") }}
-                        </div>
+                            <!-- Task Text Field -->
+                            <div class="form-group all-tasks-page">
+                                {{ form.task_text.label }}
+                                {{ form.task_text(class="form-control") }}
+                            </div>
 
-                        <!-- Due Date Field -->
-                        <div class="form-group all-tasks-page">
-                            {{ form.due_date.label }}
-                            {{ form.due_date(class="form-control") }}
-                        </div>
+                            <!-- Due Date Field -->
+                            <div class="form-group all-tasks-page">
+                                {{ form.due_date.label }}
+                                {{ form.due_date(class="form-control") }}
+                            </div>
 
-                        <!-- Task List Field -->
-                        <div class="form-group all-tasks-page">
-                            {{ form.task_list.label }}
-                            {{ form.task_list(class="form-control") }}
-                        </div>
+                            <div class="add-task-btn all-tasks-page">
+                                {{ form.submit(class="btn btn-submit all-tasks-page") }}
+                            </div>
+                        </form>
+                    </div>
 
-                        <div class="add-task-btn all-tasks-page">
-                            {{ form.submit(class="btn btn-submit all-tasks-page") }}
-                        </div>
-                    </form>
+                    <a href="{{ url_for('delete_list', list_id=list.id) }}" class="delete-list">
+                        <button>Delete List</button>
+                    </a>
                 </div>
             </div>
-
         </div>
-    </div>
-    <script src="../static/js/scripts.js"></script>
+        <script src="../static/js/scripts.js"></script>
 </body>
