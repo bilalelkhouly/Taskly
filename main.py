@@ -94,7 +94,7 @@ def dashboard():
                 upcoming_tasks.append(user_task)
         return render_template('dashboard.html', user=current_user, lists=current_user.lists,
                                upcoming_tasks=upcoming_tasks[:6], total_tasks=total_tasks, overdue_tasks=overdue_tasks,
-                               completed_tasks=completed_tasks, due_tasks=total_tasks - overdue_tasks, today=today,
+                               completed_tasks=completed_tasks, due_tasks=total_tasks - overdue_tasks-completed_tasks, today=today,
                                task_form=task_form, list_form=list_form)
     else:
         return redirect(url_for('home'))
